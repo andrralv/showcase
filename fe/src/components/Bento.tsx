@@ -1,6 +1,8 @@
-import './Bento.css';
-import { useMediaQuery } from '../assets/hooks/useMediaQuery';
+import React from 'react';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import { getRandomRange, getRow } from '../helpers/numbers';
+
+import './Bento.css';
 
 const flex = {
   display: 'flex',
@@ -21,19 +23,34 @@ const grid = {
   gap: '10px'
 };
 
+type Destination = {
+  id: number,
+  name?: string,
+  description?: string,
+  image?: string,
+  color?: string
+}
+
 type Props = {
-  attempts: number,
-  setAttempt: (T: number) => void
+  updateAttempts: () => void;
 }
 
 const Bento: React.FC<Props> = (props: Props) => {
+  const magicNumber = getRandomRange(12);
   const isMobile = useMediaQuery('(max-width: 800px)');
-
-  console.log(props.attempts);
 
   const length = 12;
   const getColor = () => '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'); // from https://stackoverflow.com/questions/5092808/how-do-i-randomly-generate-html-hex-color-codes-using-javascript
   const boxes = Array.from({ length }, (_, index) => ({ id: index+1, color: getColor() }));
+
+  const bentoClickHandler = (destination: Destination) => {
+    const { updateAttempts } = props;
+    if (destination.id === magicNumber) {
+      console.log("You won!");
+    } else {
+      updateAttempts();
+    }
+  };
   
   return (
   <div style={isMobile ? flex : grid } className="bento">
@@ -48,7 +65,13 @@ const Bento: React.FC<Props> = (props: Props) => {
         gridRow: `${getRow(i)} / span ${randomNumber}`,
       }
 
-      return <div style={bentoStyles} className={`bento-box bento-box-${i}`} key={box.id}>{box.id}</div>
+      return <div 
+        onClick={() => bentoClickHandler(box)} 
+        style={bentoStyles} 
+        className={`bento-box bento-box-${i}`}
+        key={box.id}>
+          {box.id}
+        </div>
       }
     )}
   </div>)

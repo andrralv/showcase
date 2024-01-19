@@ -1,18 +1,22 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Bento from './components/Bento';
+import Instructions from './components/Instructions';
 
 import './App.css'
 
 function App() {
-  const [attempts, setAttempts] = useState<number>(3);
+  const attemptsRef = useRef(3);
+  const [displayedAttempts, setDisplayedAttempts] = useState(attemptsRef.current);
+
+  const updateAttempts = () => {
+    attemptsRef.current -= 1;
+    setDisplayedAttempts(attemptsRef.current);
+  };
+
   return (
     <>
-      <div className="instructions">
-        <p>You have won an all inclusive holiday trip to one of these attractive destinations. You only need to correctly guess the city you're going to!</p>
-        <p> You have up to three attempts to guess the correct city!</p>
-        <p>You have (<strong style={{ color: 'red' }}>{attempts}</strong>) attempts left.</p>
-      </div>
-      <Bento {...{ attempts, setAttempts }} />
+      <Instructions attempts={displayedAttempts} />
+      <Bento updateAttempts={updateAttempts} />
     </>
   )
 }
