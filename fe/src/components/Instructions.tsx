@@ -1,14 +1,49 @@
-type Props = {
-  attempts: number
-}
 
-const Instructions = (props: Props) => {
-  const  { attempts } = props;
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAttempts } from '../redux/attempts';
+import sadface from '../assets/sad-face.svg';
+import { openFailureModal, closeModal, failureModalOpen } from '../redux/modal';
+import Modal from './Modal';
+
+import './Instructions.css';
+
+const Instructions = () => {
+  const attempts = useSelector(selectAttempts);
+  const dispatch = useDispatch();
+  const isOpen = useSelector(failureModalOpen);
+
+  console.log('a', isOpen);
+
+  const failedGameModalContent = () => {
+    return (
+    <div>
+      <p>You have lost, have have used your three (3) attempts!</p>
+      <img className="sadface-icon" src={sadface}/>
+    </div>
+    )
+  }
+
+  useEffect(() => {
+    if (attempts === 0) {
+      dispatch(openFailureModal());
+    }
+  }, [attempts]);
+
+  const closeModalHandler = () => {
+    dispatch(closeModal());
+  }
+
   return (
     <div className="instructions">
-    <p>You have won an all inclusive holiday trip to one of these attractive destinations. You only need to correctly guess the city you're going to!</p>
-    <p> You have up to three attempts to guess the correct city!</p>
-    <p>You have (<strong style={{ color: 'red' }}>{attempts}</strong>) attempts left.</p>
+      <Modal isOpen={isOpen} onClose={closeModalHandler}>
+        {failedGameModalContent()}
+      </Modal>
+      <div>
+        <p>You have the chance to win an all inclusive holiday trip to one of these attractive destinations! The price is hidden inside one of these cities.</p>
+        <p>You have up to three attempts to guess the correct city</p>
+      </div>
+      <p>You have (<strong style={{ color: 'red' }}>{attempts}</strong>) attempts left.</p>
   </div>
   )
 }

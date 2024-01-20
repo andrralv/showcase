@@ -1,29 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { decrease } from '../redux/attempts';
+import { openSuccessModal, closeModal, successModalOpen } from '../redux/modal';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { getRandomRange, getRow } from '../helpers/numbers';
+import { flex, grid } from './Bento.styles';
+import Modal from './Modal';
+import fetchDestinations from '../api/fetchDestinations';
 
 import './Bento.css';
 
-const flex = {
-  display: 'flex',
-  flexDirection: 'column' as const,
-  gap: '10px'
-};
-
-const grid = {
-  backgroundColor: 'whitesmoke',
-  borderRadius: '1em',
-  alignItems: 'center',
-  padding: '20px',
-  width: '80%',
-  margin: '0 auto',
-  display: 'grid',
-  gridAutoFlow: 'dense',
-  gridTemplateColumns: 'auto auto auto auto',
-  gap: '10px'
-};
-
-type Destination = {
+export type Destination = {
   id: number,
   name?: string,
   description?: string,
@@ -31,31 +18,64 @@ type Destination = {
   color?: string
 }
 
-type Props = {
-  updateAttempts: () => void;
-}
+const LENGTH = 12;
 
-const Bento: React.FC<Props> = (props: Props) => {
-  const magicNumber = getRandomRange(12);
+const Bento: React.FC = () => {
+  const magicNumber = getRandomRange(LENGTH);
   const isMobile = useMediaQuery('(max-width: 800px)');
+  const [destination, setDestination] = useState<Destination | null>(null);
+  const [destinations, setDestinations] = useState<Array<Destination>>([])
 
-  const length = 12;
-  const getColor = () => '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'); // from https://stackoverflow.com/questions/5092808/how-do-i-randomly-generate-html-hex-color-codes-using-javascript
-  const boxes = Array.from({ length }, (_, index) => ({ id: index+1, color: getColor() }));
+  const dispatch = useDispatch();
+  const isOpen = useSelector(successModalOpen);
+
+  useEffect(() => {
+    openModalHandler();
+    const _destinations = fetchDestinations();
+    setDestinations(_destinations);
+  }, []);
+
+  const getModalContent = (destination: Destination) => {
+    const modalBody = (
+    <div className="modal-inner-content">
+      <div>{`Congratulations! You are going to ${destination.name}! You have won!`}</div>
+      <div className="claim-modal-spacer">
+        <p className="destination-description">{destination.description}</p>
+      </div>
+      <button onClick={closeModalHandler}>Claim this holiday trip!</button>
+    </div>
+   )
+  return modalBody;
+  }
+
+  const openModalHandler = (destination?: Destination) => {
+    if (destination) {
+      dispatch(openSuccessModal({
+        additionalData: destination
+      }))
+    }
+  }
+
+  const closeModalHandler = () => {
+    dispatch(closeModal());
+  }
 
   const bentoClickHandler = (destination: Destination) => {
-    const { updateAttempts } = props;
     if (destination.id === magicNumber) {
-      console.log("You won!");
+        openModalHandler(destination);
+        setDestination(destination);
     } else {
-      updateAttempts();
+      dispatch(decrease());
     }
   };
   
   return (
   <div style={isMobile ? flex : grid } className="bento">
-    {boxes.map((box, i: number) => {
+    {destination && <Modal isOpen={isOpen} onClose={closeModalHandler}>
+      {getModalContent(destination)}
+    </Modal>}
 
+    {destinations && destinations.map((box, i: number) => {
       const randomNumber = getRandomRange(2);
       const bentoStyles = { 
         backgroundColor: box.color, 
@@ -65,13 +85,15 @@ const Bento: React.FC<Props> = (props: Props) => {
         gridRow: `${getRow(i)} / span ${randomNumber}`,
       }
 
-      return <div 
-        onClick={() => bentoClickHandler(box)} 
-        style={bentoStyles} 
-        className={`bento-box bento-box-${i}`}
-        key={box.id}>
-          {box.id}
+      return (
+        <div 
+          onClick={() => bentoClickHandler(box)} 
+          style={bentoStyles} 
+          className={`bento-box bento-box-${i}`}
+          key={box.id}>
+            {box.name}
         </div>
+        )
       }
     )}
   </div>)
