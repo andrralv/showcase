@@ -14,19 +14,36 @@ function createDatabase() {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             description TEXT,
-            image TEXT
+            image TEXT,
+            country TEXT
         )`);
     });
 
     return db;
 }
 
-function insertDestinations(db, destinations) {
-    const stmt = db.prepare('INSERT INTO destinations (name, description, image) VALUES (?, ?, ?)');
-
-    destinations.forEach(destination => {
-        stmt.run(destination.name, destination.description, destination.image);
+function destinationExists(db, name) {
+    return new Promise((resolve, reject) => {
+        db.get('SELECT 1 FROM destinations WHERE name = ?', [name], (err, row) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(!!row);
+            }
+        });
     });
+}
+
+async function insertDestinations(db, destinations) {
+    const stmt = db.prepare('INSERT INTO destinations (name, description, image, country) VALUES (?, ?, ?, ?)');
+
+    for (const destination of destinations) {
+        const exists = await destinationExists(db, destination.name);
+
+        if (!exists) {
+            stmt.run(destination.name, destination.description, destination.image, destination.country);
+        }
+    }
 
     stmt.finalize();
 }
@@ -36,14 +53,19 @@ function migrate() {
     const destinations = readJsonFile(jsonFilePath);
 
     const db = createDatabase();
-    insertDestinations(db, destinations);
-
-    db.close((err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-        console.log('Database connection closed.');
-    });
+    insertDestinations(db, destinations)
+        .then(() => {
+            db.close((err) => {
+                if (err) {
+                    console.error(err.message);
+                } else {
+                    console.log('Database connection closed.');
+                }
+            });
+        })
+        .catch((err) => {
+            console.error(err.message);
+        });
 }
 
 module.exports = migrate;

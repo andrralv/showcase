@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { decrease } from '../redux/attempts';
 import { openSuccessModal, closeModal, successModalOpen } from '../redux/modal';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { getRandomRange, getRow } from '../helpers/numbers';
 import { flex, grid } from './Bento.styles';
+import { failedGameModalContent, selectModalContent, winModalContent } from './helperComponents/modals';
 import Modal from './Modal';
 import fetchDestinations from '../api/fetchDestinations';
 
@@ -13,6 +14,7 @@ import './Bento.css';
 export type Destination = {
   id: number,
   name?: string,
+  country?: string,
   description?: string,
   image?: string,
   color?: string
@@ -24,28 +26,49 @@ const Bento: React.FC = () => {
   const magicNumber = getRandomRange(LENGTH);
   const isMobile = useMediaQuery('(max-width: 800px)');
   const [destination, setDestination] = useState<Destination | null>(null);
-  const [destinations, setDestinations] = useState<Array<Destination>>([])
+  const [destinations, setDestinations] = useState<Array<Destination> | undefined>([])
+  const [modalContent, setModalContent] = useState<React.ReactElement<unknown>>();
 
   const dispatch = useDispatch();
   const isOpen = useSelector(successModalOpen);
 
   useEffect(() => {
     openModalHandler();
-    const _destinations = fetchDestinations();
-    setDestinations(_destinations);
-  }, []);
+    getDestinationsFromApi ();
+    console.log(destinations);
+    if (destination) {
+      setModalContent(<SelectModalContent destination={destination} destinations={destinations}/>);
+    }
+  }, [destination]);
 
-  const getModalContent = (destination: Destination) => {
-    const modalBody = (
-    <div className="modal-inner-content">
-      <div>{`Congratulations! You are going to ${destination.name}! You have won!`}</div>
-      <div className="claim-modal-spacer">
-        <p className="destination-description">{destination.description}</p>
-      </div>
-      <button onClick={closeModalHandler}>Claim this holiday trip!</button>
-    </div>
-   )
-  return modalBody;
+  const getDestinationsFromApi = async () => {
+    const _destinations = await fetchDestinations('graphql');
+    setDestinations(_destinations);
+    return _destinations;
+  }
+
+
+  type SelectModalProps = {
+    destinations: Destination[] | undefined, 
+    destination: Destination
+  }
+  
+  const SelectModalContent = (props: SelectModalProps) => {
+    const { destination, destinations } = props;
+    const selectRef = useRef(null);
+
+    const goToYoutube = (destination: Destination) => {
+      window.location.href = `https://www.youtube.com/results?search_query=${destination.name}`
+    }
+    
+    const checkCountry = () => {
+      if (selectRef.current && (selectRef.current as HTMLSelectElement).value === destination.country) {
+        setModalContent(winModalContent(destination, () => goToYoutube(destination)));
+      } else {
+        setModalContent(failedGameModalContent('That is incorrect! You lost, thank you for playing.'));
+      }
+    }
+    return selectModalContent(destination, selectRef, destinations, checkCountry);
   }
 
   const openModalHandler = (destination?: Destination) => {
@@ -72,16 +95,15 @@ const Bento: React.FC = () => {
   return (
   <div style={isMobile ? flex : grid } className="bento">
     {destination && <Modal isOpen={isOpen} onClose={closeModalHandler}>
-      {getModalContent(destination)}
+      {modalContent}
     </Modal>}
 
     {destinations && destinations.map((box, i: number) => {
       const randomNumber = getRandomRange(2);
       const bentoStyles = { 
         backgroundColor: box.color, 
-        minHeight: '100px',
-        display: 'grid',
-        alignItems: 'center',
+        backgroundBlendMode: 'darken',
+        backgroundImage: `url(${box.image})`,
         gridRow: `${getRow(i)} / span ${randomNumber}`,
       }
 

@@ -5,6 +5,7 @@ const sqlite3 = require('sqlite3').verbose()
 const migrate = require('../migrate')
 const populateImages = require('../unsplash');
 const config = require('../config');
+var cors = require('cors');
 
 migrate();
 
@@ -14,6 +15,7 @@ const schema = buildSchema(`
     name: String
     description: String
     image: String
+    country: String
   }
 
   type Query {
@@ -25,13 +27,14 @@ const schema = buildSchema(`
 const root = {
   allDestinations: async () => {
     const destinations = await fetchDataFromDatabase();
-    const updatedDestinations = await populateImages(destinations, config.unsplashKey);
-    return updatedDestinations;
+    // const updatedDestinations = await populateImages(destinations, config.unsplashKey);
+    // saveDestinationsToDatabase(updatedDestinations);
+    return destinations;
   },
   destinationById: async ({ id }) => {
     const destination = await fetchDestinationById(id);
-    const updatedDestinations = await populateImages([destination], config.unsplashKey);
-    return updatedDestinations[0];
+    // const updatedDestinations = await populateImages([destination], config.unsplashKey);
+    return destination;
   },
 };
 
@@ -67,8 +70,30 @@ async function fetchDestinationById(id) {
   });
 }
 
+async function saveDestinationsToDatabase(destinations) {
+  const db = new sqlite3.Database('mydatabase.db');
+
+  // Assuming id is the primary key
+  const updateQuery = 'UPDATE destinations SET image = ? WHERE id = ?';
+
+  for (const destination of destinations) {
+    await new Promise((resolve, reject) => {
+      db.run(updateQuery, [destination.image, destination.id], (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  db.close();
+}
+
 
 var app = express();
+app.use(cors());
 
 app.use("/graphql",
   graphqlHTTP({

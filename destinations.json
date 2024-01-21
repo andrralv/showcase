@@ -2,61 +2,73 @@
   {
     "name": "Sao Paulo",
     "description": "Sao Paulo, the vibrant heart of Brazil, is a melting pot of cultures, renowned for its diverse culinary scene, dynamic street art, and lively music festivals. Explore the bustling markets, relax in lush parks, and experience the pulsating energy of this metropolis.",
-    "image": ""
+    "image": "",
+    "country": "Brazil"
   },
   {
     "name": "Madrid",
     "description": "Madrid, the capital of Spain, enchants visitors with its historic charm and modern vitality. Immerse yourself in the artistry of the Prado Museum, savor tapas in lively neighborhoods, and embrace the passionate spirit of flamenco dancing beneath the city's dazzling skyline.",
-    "image": ""
+    "image": "",
+    "country": "Spain"
   },
   {
     "name": "Tokyo",
     "description": "Tokyo, a futuristic metropolis, seamlessly blends tradition and innovation. Dive into the sensory overload of vibrant neighborhoods, discover serene temples, and indulge in the world's finest sushi. Tokyo's eclectic charm ensures a captivating journey through its cutting-edge culture and timeless traditions.",
-    "image": ""
+    "image": "",
+    "country": "Japan"
   },
   {
     "name": "Bangkok",
     "description": "Bangkok, the bustling capital of Thailand, captivates with its ornate temples, bustling markets, and vibrant nightlife. Explore the contrast between ancient landmarks and modern skyscrapers, savor the exquisite street food, and experience the warmth of Thai hospitality in this city that never sleeps.",
-    "image": ""
+    "image": "",
+    "country": "Thailand"
   },
   {
     "name": "New York",
     "description": "New York City, the epitome of the American dream, invites you to wander through iconic skyscrapers, explore world-class museums, and savor diverse cuisine from every corner of the globe. Embrace the city's unmatched energy as you discover its timeless landmarks and cutting-edge culture.",
-    "image": ""
+    "image": "",
+    "country": "United States"
   },
   {
     "name": "Paris",
     "description": "Paris, the City of Light, exudes romance and sophistication. Stroll along the Seine, marvel at iconic landmarks like the Eiffel Tower and Louvre Museum, and indulge in delectable pastries at charming cafes. Immerse yourself in the timeless allure of art, fashion, and culinary delights.",
-    "image": "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=2620&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    "image": "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=2620&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "country": "France"
   },
   {
     "name": "London",
     "description": "London, the historic capital of the United Kingdom, invites you to traverse its rich cultural tapestry. Explore royal palaces, traverse vibrant markets, and immerse yourself in the world-class theater scene. The city's eclectic blend of tradition and modernity promises a truly enchanting experience.",
-    "image": ""
+    "image": "",
+    "country": "England"
   },
   {
     "name": "Rome",
     "description": "Rome, the Eternal City, beckons with its ancient wonders and timeless beauty. Wander through the Colosseum, toss a coin in the Trevi Fountain, and savor authentic Italian cuisine in charming trattorias. Immerse yourself in the history and romance that permeate every cobblestone street.",
-    "image": ""
+    "image": "",
+    "country": "Italy"
   },
   {
     "name": "Istanbul",
     "description": "Istanbul, where East meets West, captivates with its majestic mosques, bustling bazaars, and rich history. Traverse the iconic Bosphorus Strait, explore the intricate architecture of the Hagia Sophia, and savor the flavors of traditional Turkish delights in this vibrant cultural crossroads.",
-    "image": ""
+    "image": "",
+    "country": "Turkey"
   },
   {
     "name": "Sydney",
     "description": "Sydney, the jewel of Australia, boasts stunning harbor views, iconic landmarks like the Sydney Opera House, and pristine beaches. Dive into the vibrant arts scene, embark on coastal walks, and embrace the laid-back Australian lifestyle in this sun-kissed metropolis.",
-    "image": ""
+    "image": "",
+    "country": "Australia"
   },
   {
     "name": "Cape Town",
     "description": "Cape Town, nestled beneath Table Mountain, lures adventurers with its breathtaking landscapes and rich history. Explore the vibrant neighborhoods, embark on a safari in nearby reserves, and savor the fusion of flavors in its diverse culinary scene. Cape Town promises an unforgettable blend of nature and culture.",
-    "image": ""
+    "image": "",
+    "country": "South Africa"
   },
   {
     "name": "Hong Kong",
     "description": "Hong Kong, a dynamic fusion of East and West, dazzles with its towering skyscrapers, bustling markets, and scenic harbor. Experience the vibrant street life, indulge in delectable dim sum, and take in panoramic views from Victoria Peak. Hong Kong is a city where tradition and modernity harmoniously coexist.",
-    "image": ""
+    "image": "",
+    "country": "China"
   }
 ]

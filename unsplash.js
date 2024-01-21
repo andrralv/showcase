@@ -5,7 +5,7 @@ async function populateImages(destinations, unsplashApiKey) {
 
     for (const destination of destinations) {
         const query = `${destination.name} urban`;
-        const apiUrl = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(query)}&client_id=${unsplashApiKey}`;
+        const apiUrl = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(query)}&client_id=${unsplashApiKey}&orientation=squarish`;
 
         try {
             const response = await axios.get(apiUrl);

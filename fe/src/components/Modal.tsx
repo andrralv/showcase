@@ -1,7 +1,7 @@
 import { ReactNode, useRef } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import useClickAway from "../hooks/useClickAway";
-import { successModalData, closeModal } from '../redux/modal';
+import { closeModal } from '../redux/modal';
 
 import './Modal.css';
 
@@ -15,9 +15,6 @@ const Modal: React.FC<Props> = (props: Props) => {
   const { isOpen, children, onClose } = props;
   const modalRef = useRef(null);
   const dispatch = useDispatch();
-
-  const additionalData = useSelector(successModalData);
-  console.log(additionalData);
 
   const handleOnClickAway = () => {
     dispatch(closeModal());

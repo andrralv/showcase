@@ -8,13 +8,25 @@
 }
 
 .modal-content {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
   background-color: whitesmoke;
-  width: 70%;
-  min-height: 200px;
-  margin: 0 auto;
-  position: relative;
-  top: 20%;
 }
+
+@media screen and (min-width: 800px) {
+  .modal-content {
+    width: 70%;
+    min-height: 200px;
+    margin: 0 auto;
+    position: relative;
+    top: 20%;
+    height: auto;
+  }
+}
+
+
 
 .modal-header {
   display: flex;
@@ -41,7 +53,7 @@
 }
 
 .modal-inner-content button {
-  margin-top: 20px 0;
+  margin: 10px 0 20px 0;
   background-color: rgb(91, 91, 210);
   border: 1px solid rgb(64, 62, 152);
   padding: 5px 10px;
@@ -58,4 +70,27 @@
 
 .modal-description {
   text-align: justify;
+}
+
+.modal-inner-content select {
+  display: block;
+  margin: 20px auto;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.destination-description {
+  max-width: 70%;
+  margin: 20px auto;
+  word-break: auto-phrase;
+  font-style: italic;
+  text-overflow: ellipsis;
+}
+
+.destination-image {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 300px;
 }
