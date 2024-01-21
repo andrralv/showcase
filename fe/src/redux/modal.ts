@@ -4,7 +4,7 @@ type State = {
     modal: {
       successModal: {
         isOpen: boolean;
-        additionalData?: any;
+        additionalData?: unknown;
       },
       failureModal: {
         isOpen: boolean;

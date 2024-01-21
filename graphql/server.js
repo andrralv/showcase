@@ -27,8 +27,8 @@ const schema = buildSchema(`
 const root = {
   allDestinations: async () => {
     const destinations = await fetchDataFromDatabase();
-    // const updatedDestinations = await populateImages(destinations, config.unsplashKey);
-    // saveDestinationsToDatabase(updatedDestinations);
+    const updatedDestinations = await populateImages(destinations, config.unsplashKey);
+    saveDestinationsToDatabase(updatedDestinations);
     return destinations;
   },
   destinationById: async ({ id }) => {

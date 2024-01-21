@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import config from '../config';
 import { useDispatch, useSelector } from 'react-redux';
 import { decrease } from '../redux/attempts';
 import { openSuccessModal, closeModal, successModalOpen } from '../redux/modal';
@@ -35,14 +36,13 @@ const Bento: React.FC = () => {
   useEffect(() => {
     openModalHandler();
     getDestinationsFromApi ();
-    console.log(destinations);
     if (destination) {
       setModalContent(<SelectModalContent destination={destination} destinations={destinations}/>);
     }
   }, [destination]);
 
   const getDestinationsFromApi = async () => {
-    const _destinations = await fetchDestinations('graphql');
+    const _destinations = await fetchDestinations(config.httpMethod);
     setDestinations(_destinations);
     return _destinations;
   }

@@ -6,6 +6,7 @@ export const failedGameModalContent = (message: string) => {
   return (
   <div>
     <p>{message}</p>
+    <p>{'Refresh the page to try again.'}</p>
     <img className="sadface-icon" src={sadface}/>
   </div>
   )
@@ -29,7 +30,7 @@ export const selectModalContent = (destination: Destination, ref: MutableRefObje
   return (
     <div className="modal-inner-content">
       <div>{'One more step! To win this trip, you must correctly select the country this city belongs to.'}</div>
-      <p>{`What country is ${destination.name} a city of?`}</p>
+      <p>{`What country does ${destination.name} belong to?`}</p>
       <select name="countries" id="country-list" ref={ref}>
         {
           destinations && destinations.map(d => {

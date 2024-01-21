@@ -2,3 +2,24 @@
   margin-top: 5%;
   text-align: center;
 }
+
+.body-dark {
+  height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+.body-light {
+  height: 100vh;
+  background-color: white;
+  color: black;
+}
+
+.app-header {
+  text-align: right;
+}
+
+.app-header button {
+  cursor: pointer;
+  margin: 5px;
+}

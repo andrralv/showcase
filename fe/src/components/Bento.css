@@ -9,9 +9,17 @@
   font-size: 20px;
 }
 
+.bento {
+  margin: 0 5px;
+}
+
 .bento-box:hover {
   cursor: pointer;
   animation: 500ms 1 forwards darken;
+}
+
+.bento-box:active {
+  background-color: white;
 }
 
 .bento-box-2 {

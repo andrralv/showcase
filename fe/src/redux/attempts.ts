@@ -5,7 +5,7 @@ type State = {
     value: number;
   }
 }
-const initialState = { value: 8 };
+const initialState = { value: 3 };
 
 export const attemptSlice = createSlice({
   name: 'attempts',

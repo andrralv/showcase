@@ -4,7 +4,7 @@ type Config = {
 }
 
 const config: Config = {
-  httpMethod: 'local'
+  httpMethod: 'graphql'
 };
 
 export default config;
