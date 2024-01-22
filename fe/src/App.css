@@ -1,18 +1,30 @@
 .instructions {
-  margin-top: 5%;
+  margin-top: 3%;
   text-align: center;
 }
 
 .body-dark {
-  height: 100vh;
+  height: 180vh;
   background-color: black;
+}
+
+.body-dark .instructions {
   color: white;
 }
 
 .body-light {
-  height: 100vh;
+  height: 180vh;
   background-color: white;
+}
+
+.body-light .instructions {
   color: black;
+}
+
+@media screen and (min-width: 800px) {
+  .body-dark, .body-light {
+    height: 100vh;
+  }
 }
 
 .app-header {

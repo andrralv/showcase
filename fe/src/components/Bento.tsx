@@ -18,7 +18,7 @@ export type Destination = {
   country?: string,
   description?: string,
   image?: string,
-  color?: string
+  color?: string 
 }
 
 const LENGTH = 12;

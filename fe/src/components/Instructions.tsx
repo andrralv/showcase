@@ -29,7 +29,7 @@ const Instructions = () => {
         {failedGameModalContent('You have used your three (3) attempts! You lost!')}
       </Modal>
       <div>
-        <p>You have the chance to win an all inclusive holiday trip to one of these attractive destinations! The price is hidden inside one of these cities.</p>
+        <p>You have the chance to win an all inclusive holiday trip to one of these attractive destinations! The prize is hidden inside one of these cities.</p>
         <p>You have up to three attempts to guess the correct city.</p>
       </div>
       <p>You have (<strong style={{ color: 'red' }}>{attempts}</strong>) attempts left.</p>

@@ -1,30 +1,46 @@
-# React + TypeScript + Vite
+# How to run
+Backend:
+- cd graphql (first time uncomment commented lines in server.js to populate images)
+- npm install
+- node server.js
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend:
+- cd fe
+- npm install
+- npm run dev
 
-Currently, two official plugins are available:
+# Concept
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This repo is a quick React application showcasing different concepts related to React and Frontend development. The list of concepts is listed below:
 
-## Expanding the ESLint configuration
+- Grid vs Flex display styling
+- Inline React CSS and file CSS
+- Responsive Design 
+- Keyframes / basic css animations
+- Modals (positioning)
+- React hook lifecycle
+  - useState
+  - useEffect
+  - useRef
+- Custom Hooks
+- State Management
+  - Redux-toolkit
+  - Context
+- Config/Feature flagging
+- Project Structure
+- Variable naming
+- REST/GraphQL API calls
+- Typescript typing
+- SQLite 
+- Node/Express
+- External APIs (Unsplash)
+- CORS
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# Pending
 
-- Configure the top-level `parserOptions` property like this:
+- Configure tests / RTL
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+# How to play
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+When you run the project you are presented with 12 tiles indicating 12 different cities in the world.  You have 3 attempts to guess which city that has a hidden prize (a trip to that destination - a blatant lie).   
+When you correctly guess the city you also have to select which country that city belongs to, and then you can claim the prize (also a lie, you get redirected to a Youtube search of that city).

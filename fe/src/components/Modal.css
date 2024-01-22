@@ -21,7 +21,7 @@
     min-height: 200px;
     margin: 0 auto;
     position: relative;
-    top: 20%;
+    top: 5%;
     height: auto;
   }
 }
@@ -50,6 +50,7 @@
 .modal-body {
   margin: 20px;
   text-align: center;
+  color: black;
 }
 
 .modal-inner-content button {
@@ -93,4 +94,9 @@
   border-radius: 4px;
   padding: 5px;
   width: 300px;
+}
+
+.sadface-icon {
+  height: 75px;
+  margin: 10px 0;
 }
