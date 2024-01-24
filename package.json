@@ -18,6 +18,7 @@
   "homepage": "https://github.com/andrralv/showcase#readme",
   "dependencies": {
     "axios": "^1.6.5",
+    "dotenv": "^16.4.0",
     "sqlite3": "^5.1.7"
   }
 }
