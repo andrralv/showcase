@@ -21,7 +21,6 @@
     min-height: 200px;
     margin: 0 auto;
     position: relative;
-    top: 5%;
     height: auto;
   }
 }
@@ -99,4 +98,8 @@
 .sadface-icon {
   height: 75px;
   margin: 10px 0;
+}
+
+.claimed-text {
+  margin-bottom: 10px;
 }

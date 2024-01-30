@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import config from '../config';
+import { useMutation } from '@apollo/client';
+import { MUTATION } from '../api/increaseClaims';
 import { useDispatch, useSelector } from 'react-redux';
 import { decrease } from '../redux/attempts';
 import { openSuccessModal, closeModal, successModalOpen } from '../redux/modal';
@@ -18,7 +20,8 @@ export type Destination = {
   country?: string,
   description?: string,
   image?: string,
-  color?: string 
+  color?: string,
+  claims?: number
 }
 
 const LENGTH = 12;
@@ -32,6 +35,7 @@ const Bento: React.FC = () => {
 
   const dispatch = useDispatch();
   const isOpen = useSelector(successModalOpen);
+  const [increaseClaims] = useMutation(MUTATION);
 
   useEffect(() => {
     openModalHandler();
@@ -57,13 +61,16 @@ const Bento: React.FC = () => {
     const { destination, destinations } = props;
     const selectRef = useRef(null);
 
-    const goToYoutube = (destination: Destination) => {
-      window.location.href = `https://www.youtube.com/results?search_query=${destination.name}`
-    }
+    const claim = (destination: Destination) => {
+      increaseClaims({
+        variables: {destinationId: destination.id },
+      });
+      location.reload();
+    };
     
     const checkCountry = () => {
       if (selectRef.current && (selectRef.current as HTMLSelectElement).value === destination.country) {
-        setModalContent(winModalContent(destination, () => goToYoutube(destination)));
+        setModalContent(winModalContent(destination, () => claim(destination)));
       } else {
         setModalContent(failedGameModalContent('That is incorrect! You lost, thank you for playing.'));
       }

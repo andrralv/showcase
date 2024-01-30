@@ -15,7 +15,8 @@ function createDatabase() {
             name TEXT,
             description TEXT,
             image TEXT,
-            country TEXT
+            country TEXT,
+            claims INTEGER DEFAULT 0 -- Added claims field with default value 0
         )`);
     });
 
@@ -35,13 +36,13 @@ function destinationExists(db, name) {
 }
 
 async function insertDestinations(db, destinations) {
-    const stmt = db.prepare('INSERT INTO destinations (name, description, image, country) VALUES (?, ?, ?, ?)');
+    const stmt = db.prepare('INSERT INTO destinations (name, description, image, country, claims) VALUES (?, ?, ?, ?, ?)');
 
     for (const destination of destinations) {
         const exists = await destinationExists(db, destination.name);
 
         if (!exists) {
-            stmt.run(destination.name, destination.description, destination.image, destination.country);
+            stmt.run(destination.name, destination.description, destination.image, destination.country, 0); // Default claims to 0
         }
     }
 

@@ -9,7 +9,8 @@ const QUERY = gql`
       name,
       description, 
       image,
-      country
+      country,
+      claims
     }
   }
 `;

@@ -20,6 +20,7 @@ export const winModalContent = (destination: Destination, callback: () => void) 
       <img src={destination.image} alt={destination.name} className='destination-image'/>
       <p className="destination-description">{destination.description}</p>
     </div>
+    <p className="claimed-text">Times Claimed: {destination.claims}</p>
     <button onClick={callback}>Claim this holiday trip!</button>
   </div>
  )

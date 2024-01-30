@@ -16,11 +16,16 @@ const schema = buildSchema(`
     description: String
     image: String
     country: String
+    claims: Int
   }
 
   type Query {
     allDestinations: [Destination]
     destinationById(id: Int): Destination
+  }
+
+  type Mutation {
+    increaseClaims(destinationId: Int!): Destination
   }
 `);
 
@@ -36,6 +41,14 @@ const root = {
     // const updatedDestinations = await populateImages([destination], config.unsplashKey);
     return destination;
   },
+  increaseClaims: async ({ destinationId }) => {
+    const destination = await fetchDestinationById(destinationId);
+    destination.claims += 1;
+
+    await saveDestinationsToDatabase([destination]);
+    console.log('hola', destination);
+    return destination;
+  }
 };
 
 async function fetchDataFromDatabase() {
@@ -73,12 +86,11 @@ async function fetchDestinationById(id) {
 async function saveDestinationsToDatabase(destinations) {
   const db = new sqlite3.Database('mydatabase.db');
 
-  // Assuming id is the primary key
-  const updateQuery = 'UPDATE destinations SET image = ? WHERE id = ?';
+  const updateQuery = 'UPDATE destinations SET image = ?, claims = ? WHERE id = ?';
 
   for (const destination of destinations) {
     await new Promise((resolve, reject) => {
-      db.run(updateQuery, [destination.image, destination.id], (err) => {
+      db.run(updateQuery, [destination.image, destination.claims, destination.id], (err) => {
         if (err) {
           reject(err);
         } else {
@@ -90,6 +102,7 @@ async function saveDestinationsToDatabase(destinations) {
 
   db.close();
 }
+
 
 
 var app = express();
